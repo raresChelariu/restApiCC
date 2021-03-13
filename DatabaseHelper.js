@@ -1,26 +1,31 @@
-const mysql = require('mysql');
+const mariadb = require('mariadb');
 
-let con = mysql.createConnection({
-    host: "localhost",
-    user: "rares",
-    password: "yourpassword"
+const pool = mariadb.createPool({
+    host: 'localhost',
+    database : 'appusers',
+    user:'root',
+    password: 'rares123',
+    connectionLimit: 5
 });
 
-export const runSelectQuery = (selectQuery, callback) => {
-    con.connect((err) => {
-        if (err)
-            throw err
-        con.query(selectQuery, (err, result, fields) => {
-            if (err)
-                throw err
-            // console.log(result);
-            callback(result)
-        });
-    });
+
+const executeSelectQuery = (selectQuery, callback) => {
+    pool.getConnection().then( (conn) => {
+        conn.query(selectQuery).then( (rows) => {
+            callback(rows)
+        }).catch( (err) => {
+            console.error(err)
+        })
+    })
 }
-con.connect(function (err) {
-    if (err) throw err;
-    console.log("Connected!");
-});
+const executeDMLQuery =  (query) => {
+    pool.getConnection().then( async (conn) => {
+        const res = await conn.query(query)
 
 
+    })
+}
+module.exports = {
+    executeSelectQuery : executeSelectQuery,
+    executeDMLQuery : executeDMLQuery
+}
