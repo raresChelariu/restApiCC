@@ -1,4 +1,4 @@
-const RequestObject = require('./RequestObject')
+const RequestObject = require('./RouterRequest')
 
 const responseHeaders = {
     'JSON': {'Content-Type': 'application/json; charset=UTF-8'},
@@ -25,14 +25,12 @@ const setRouteAction = (httpVerb, path, action) => {
 const getRouteAction = (req) => {
     let reqObj = new RequestObject(req)
 
-    if (reqObj.path.indexOf(':') === -1)
-    {
-        let perfectMatch = router[reqObj.method][reqObj.path];
-        if (undefined !== perfectMatch)
-            return perfectMatch
-    }
-
-    // TODO Change to match template pattern with COLON (:)
+    // if (reqObj.path.indexOf(':') === -1)
+    // {
+    //     let perfectMatch = router[reqObj.method][reqObj.path];
+    //     if (undefined !== perfectMatch)
+    //         return perfectMatch
+    // }
 
     for (const [path, action] of Object.entries(router[reqObj.method])) {
 
