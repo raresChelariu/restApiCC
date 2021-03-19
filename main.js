@@ -1,7 +1,7 @@
 const http = require('http')
 const router = require('./Router')
 const routesDefinitions = require('./routesDefinitions')
-const dbhelper = require('./DatabaseHelper')
+_ = require('./DatabaseHelper')
 const PORT = 5000
 
 routesDefinitions.init()

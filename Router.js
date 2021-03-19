@@ -75,6 +75,9 @@ const NotImplemented = (req, serverResponse) => {
     serverResponse.end(JSON.stringify(resultObj))
 }
 const extractParams = (templatePath, givenPath) => {
+    if (givenPath.charAt(givenPath.length-1) === '/')
+        givenPath = givenPath.substring(0, givenPath.length-2);
+
     let templatePathTokens = templatePath.split('/')
     let givenPathTokens = givenPath.split('/')
     if (givenPathTokens.length !== templatePathTokens.length)

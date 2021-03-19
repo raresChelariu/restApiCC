@@ -1,5 +1,4 @@
 const url = require('url')
-// const querystring = require('querystring')
 const formidable = require('formidable')
 
 // noinspection JSDeprecatedSymbols
@@ -8,6 +7,8 @@ class RouterRequest {
         this.parsedUrl = (req.url !== undefined ? url.parse(req.url, true) : undefined)
         this.method = req.method
         this.path = (this.parsedUrl !== undefined ? this.parsedUrl.pathname : req.url)
+        if (this.path.length > 1 && this.path.charAt( this.path.length - 1 ) === '/')
+            this.path = this.path.substring( 0, this.path.length - 1 )
     }
     static extractRequestBody(req) {
         return new Promise(((resolve, reject) => {

@@ -28,7 +28,6 @@ const executeDMLQuery =  (query) => {
 
     pool.getConnection().then( async (conn) => {
         const res = await conn.query(query)
-        console.log(query + ' ---> ' + res)
         await conn.end()
     }).catch((err) => {
         console.log(err)
